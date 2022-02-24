@@ -2,12 +2,14 @@ import finnhub
 import pandas as pd
 from Scripts.config import token
 import json
+from parse import URLParser
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from collections import defaultdict
 
 
-if __name__ == '__main__':
+
+def main():
 
     # Initialize client interface to finnhub API
     finnhub_client = finnhub.Client(api_key=token)
@@ -46,14 +48,18 @@ if __name__ == '__main__':
 
         # View news from Yahoo only
         if news['source'] == 'Yahoo':
-
             # Set key to date time and append URL to list
             yahoo_URLs[news['datetime']].append(news['url'])
-            #print(news)
-            #print()
+            # print(news)
+            # print()
 
-    for date, URLS in yahoo_URLs.items():
-
+    for date, urls in yahoo_URLs.items():
         print(date)
-        print(URLS)
+        for url in urls:
+            print(url)
+            URLParser().parseurl(url)
         print()
+
+
+if __name__ == '__main__':
+    main()
